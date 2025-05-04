@@ -1,0 +1,157 @@
+.virtual-keyboard-card {
+  margin-top: 40px;
+}
+
+.virtual-keyboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 40px;
+
+  &--num {
+    .virtual-keyboard__key {
+      width: 104px;
+
+      &--NUM {
+        &:after {
+          content: 'ABC';
+        }
+      }
+    }
+  }
+
+  &--isCaps {
+    .virtual-keyboard__key {
+      text-transform: uppercase;
+
+      &--SPACE,
+      &--GO {
+        text-transform: initial;
+      }
+
+      &--SHIFT {
+        background-image: url('../assets/icons/shift-on.svg');
+      }
+    }
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 16px;
+    border-radius: 48px;
+    padding: 48px;
+    background-color: #fff9e0;
+    width: 1840px;
+  }
+
+  &__row {
+    display: flex;
+    column-gap: 16px;
+  }
+
+  &__key {
+    border-radius: 16px;
+    width: 130px;
+    height: 96px;
+
+    box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.3);
+    background: #f5efd6;
+
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 36px;
+    text-align: center;
+    color: #2b2a29;
+    transition: transform 0.1s;
+
+    &:active {
+      transform: scale(0.95);
+    }
+
+    &--SHIFT,
+    &--BACKSPACE,
+    &--NUM,
+    &--LANG,
+    &--SPACE,
+    &--GO {
+      font-size: 0;
+    }
+
+    &--SHIFT,
+    &--BACKSPACE,
+    &--NUM,
+    &--LANG {
+      background-color: #e1dbc2;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    &--SHIFT {
+      background-image: url('../assets/icons/shift-off.svg');
+      width: 208px;
+    }
+
+    &--BACKSPACE {
+      background-image: url('../assets/icons/backspace.svg');
+      width: 208px;
+    }
+
+    &--NUM {
+      &:after {
+        content: '&123';
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 400;
+        font-size: 36px;
+        text-align: center;
+      }
+      width: 280px;
+    }
+
+    &--LANG {
+      background-image: url('../assets/icons/lang.svg');
+      width: 280px;
+    }
+
+    &--SPACE {
+      &:after {
+        content: 'Пробел';
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 400;
+        font-size: 36px;
+        text-align: center;
+      }
+      width: 1152px;
+    }
+
+    &--GO {
+      &:after {
+        content: 'Найти';
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 400;
+        font-size: 36px;
+        text-align: center;
+        color: #ffffff;
+      }
+      width: 152px;
+      background-color: #cf3337;
+    }
+  }
+
+  &__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 48px;
+    padding: 32px 64px;
+    width: 176px;
+    height: 112px;
+    background-color: #fff9e0;
+
+    svg {
+      width: 44px;
+      height: 44px;
+    }
+  }
+}
