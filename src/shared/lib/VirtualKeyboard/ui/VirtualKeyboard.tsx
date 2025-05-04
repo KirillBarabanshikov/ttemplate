@@ -3,10 +3,8 @@ import './VirtualKeyboard.scss';
 import clsx from 'clsx';
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { FC, RefObject, useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 
-import { Card } from '@/shared/ui';
-
-import CloseIcon from '../assets/icons/close.svg?react';
 import { keyboardData } from '../data';
 import { updateInputValueWithCursor } from '../lib';
 import { useVirtualKeyboard } from '../provider';
@@ -90,53 +88,47 @@ export const VirtualKeyboard: FC<IVirtualKeyboardProps> = ({
     }
   };
 
-  return (
+  return createPortal(
     <AnimatePresence>
       {show && (
         <motion.div
-          initial={{ opacity: 0, height: 0, pointerEvents: 'none' }}
-          animate={{ opacity: 1, height: 'auto', pointerEvents: 'initial' }}
-          exit={{ opacity: 0, height: 0, pointerEvents: 'none' }}
+          initial={{ opacity: 0, pointerEvents: 'none' }}
+          animate={{ opacity: 1, pointerEvents: 'initial' }}
+          exit={{ opacity: 0, pointerEvents: 'none' }}
+          className={clsx(
+            'virtual-keyboard',
+            `virtual-keyboard--${keyboardType}`,
+            isCaps && 'virtual-keyboard--isCaps',
+          )}
         >
-          <Card className={'virtual-keyboard-card'}>
-            <div
-              className={clsx(
-                'virtual-keyboard',
-                `virtual-keyboard--${keyboardType}`,
-                isCaps && 'virtual-keyboard--isCaps',
-              )}
-            >
-              <div
-                onClick={(e) => handleClick(e)}
-                onMouseDown={(e) => e.preventDefault()}
-                className={'virtual-keyboard__body'}
-              >
-                {keyboardData[keyboardType].map((row, index) => {
-                  return (
-                    <div key={index} className={'virtual-keyboard__row'}>
-                      {row.map((key, index) => (
-                        <button
-                          key={index}
-                          data-key={isCaps ? key.toUpperCase() : key}
-                          className={clsx(
-                            'virtual-keyboard__key',
-                            `virtual-keyboard__key--${key}`,
-                          )}
-                        >
-                          {key}
-                        </button>
-                      ))}
-                    </div>
-                  );
-                })}
-              </div>
-              <button className={'virtual-keyboard__close'}>
-                <CloseIcon />
-              </button>
-            </div>
-          </Card>
+          <div
+            onClick={(e) => handleClick(e)}
+            onMouseDown={(e) => e.preventDefault()}
+            className={'virtual-keyboard__body'}
+          >
+            {keyboardData[keyboardType].map((row, index) => {
+              return (
+                <div key={index} className={'virtual-keyboard__row'}>
+                  {row.map((key, index) => (
+                    <button
+                      key={index}
+                      data-key={isCaps ? key.toUpperCase() : key}
+                      className={clsx(
+                        'virtual-keyboard__key',
+                        `virtual-keyboard__key--${key}`,
+                      )}
+                    >
+                      {key}
+                    </button>
+                  ))}
+                </div>
+              );
+            })}
+          </div>
+          <button className={'virtual-keyboard__close'} />
         </motion.div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    (document.getElementById('portal') as HTMLDivElement) || document.body,
   );
 };

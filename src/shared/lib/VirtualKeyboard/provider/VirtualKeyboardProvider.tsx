@@ -16,7 +16,6 @@ type GoCallback = () => void;
 interface VirtualKeyboardContextProps {
   subscribeOnGo: (cb: GoCallback) => () => void;
   triggerGo: () => void;
-  isOpen: boolean;
 }
 
 const noop = () => {};
@@ -25,7 +24,6 @@ export const VirtualKeyboardContext =
   createContext<VirtualKeyboardContextProps>({
     subscribeOnGo: () => noop,
     triggerGo: noop,
-    isOpen: false,
   });
 
 export const useVirtualKeyboard = () => useContext(VirtualKeyboardContext);
@@ -43,7 +41,7 @@ export const VirtualKeyboardProvider: FC<PropsWithChildren> = ({
 
       if (isInputSupported(target)) {
         inputRef.current = target as HTMLInputElement;
-        if (!inputRef.current.readOnly) setShowKeyboard(true);
+        setShowKeyboard(true);
       }
     };
 
@@ -107,9 +105,7 @@ export const VirtualKeyboardProvider: FC<PropsWithChildren> = ({
   }, []);
 
   return (
-    <VirtualKeyboardContext.Provider
-      value={{ subscribeOnGo, triggerGo, isOpen: showKeyboard }}
-    >
+    <VirtualKeyboardContext.Provider value={{ subscribeOnGo, triggerGo }}>
       {children}
       <VirtualKeyboard show={showKeyboard} inputRef={inputRef} />
     </VirtualKeyboardContext.Provider>

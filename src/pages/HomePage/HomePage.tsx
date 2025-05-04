@@ -4,6 +4,7 @@ export const HomePage = () => {
   return (
     <div>
       <Link to={'/about'}>about</Link>
+      <input />
     </div>
   );
 };
