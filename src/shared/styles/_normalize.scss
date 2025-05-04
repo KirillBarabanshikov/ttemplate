@@ -121,15 +121,6 @@ body {
   line-height: 1.5;
 }
 
-#root {
-  display: contents;
-}
-
-#portal {
-  position: relative;
-  z-index: 1000;
-}
-
 /**
   Нормализация высоты элемента ссылки при его инспектировании в DevTools
  */
